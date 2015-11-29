@@ -1,0 +1,14 @@
+{
+  "name": "testAngandWebpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular-route": "^1.4.8"
+  }
+}

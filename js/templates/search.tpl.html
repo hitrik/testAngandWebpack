@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="controlls">
+        <input type="text" placeholder="Enter film title"/>
+        <button>Искать</button>
+    </div>
+    <div class="results">
+        <div class="item_film search" data-ng-cloak ng-repeat="film in searchRes track by $index">
+            <figure>
+                <img data-ng-src="{{film.poster_path ? (img_uri150 + film.poster_path) : 'http://placehold.it/150x212'}}" alt="{{film.title}}"/>
+            </figure>
+            <div class="item_film__title">{{film.title}}</div>
+            <div class="item_film__rating">{{film.vote_average}}</div>
+            <div class="item_film__release">{{film.release_date}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+body nav.menu {
+  display: inline-block;
+  margin-left: 20px;
+}
+body nav.menu ul {
+  margin: 0;
+  padding: 0;
+}
+body nav.menu li {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px;
+}
+body nav.menu li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+body nav.menu li a:hover {
+  text-decoration: underline;
+}
+body .top_line {
+  padding: 15px;
+  background: steelblue;
+  color: #fff;
+  font-size: 23px;
+}
+body .top_line .logo {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 5px 10px;
+  background-color: #3FB93F;
+  border-radius: 0 0 10px 0;
+  text-shadow: 0 1px 1px #000;
+}
+body .container .controlls {
+  padding: 5px;
+  text-align: center;
+}
+body .container .controlls input {
+  width: 350px;
+  height: 35px;
+  outline: none;
+  padding: 0 5px;
+  font-size: 18px;
+}
+body .container .controlls button {
+  margin-left: 5px;
+  height: 35px;
+  background: #3FB93F;
+  border: none;
+  vertical-align: top;
+  padding: 5px 25px;
+  color: #fff;
+  border-radius: 2px;
+  font-size: 18px;
+  cursor: pointer;
+}
+body .container .controlls button:hover {
+  background-color: #329332;
+}
+body .container .results .item_film {
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
+  margin: 10px;
+  position: relative;
+}
+body .container .results .item_film figure {
+  height: 225px;
+  background: #000;
+  overflow: hidden;
+}
+body .container .results .item_film figure img {
+  max-height: 100%;
+}
+body .container .results .item_film__title {
+  width: 150px;
+  margin: auto;
+  text-align: center;
+  font-size: 13px;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  color: #2F2F2F;
+  left: 50%;
+  margin-left: -75px;
+  bottom: 21px;
+  padding: 10px 5px;
+  font-weight: 600;
+}
+body .container .results .item_film__rating {
+  position: absolute;
+  padding: 5px;
+  background: #F9F075;
+  top: 23px;
+  right: 47px;
+  border-radius: 0 0 0 5px;
+}
+body .container .results .item_film__release {
+  position: absolute;
+  top: 23px;
+  left: 47px;
+  background: orange;
+  padding: 5px;
+  border-radius: 0 0 5px 0;
+}

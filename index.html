@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS</title>
+    <link rel="stylesheet" href="./css/style.css"/>
+</head>
+<body data-ng-controller="MainCtrl as main">
+    <div class="top_line"><span class="logo">Film DB</span>
+        <data-top-menu></data-top-menu>
+    </div>
+    <section class="content">
+        <div ng-view></div>
+    </section>
+    <script src="./js/build.js"></script>
+    <div class="indicator" data-load-page></div>
+</body>
+</html>
