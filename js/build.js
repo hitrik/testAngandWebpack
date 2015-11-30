@@ -57,13 +57,21 @@
 	    .when('/', {
 	        templateUrl: './js/templates/main_page.tpl.html'
 	    })
-	    .when('/search', {
+	    .when('/search/:query?', {
 	        templateUrl: './js/templates/search_page.tpl.html',
 	        controller: 'searchController'
 	    })
 	    .when('/nowmovie', {
-	        templateUrl: './js/templates/nowmoview_page.tpl.html',
-	        //controller: 'nowMovieController'
+	        templateUrl: './js/templates/nowmoview_page.tpl.html'
+	    })
+	    .when('/soon', {
+	        templateUrl: './js/templates/soon_moview_page.tpl.html'
+	    })
+	    .when('/film/:id', {
+	        templateUrl: './js/templates/item_film.tpl.html'
+	    })
+	    .otherwise({
+	            redirectTo: '/'
 	    });
 	});
 	angular.element(document).ready(function() {
@@ -30119,17 +30127,17 @@
 	            console.log('page is loaded');
 	        });
 	    }])
-	    .controller('searchController', ['$scope', 'getData', '$location', function($scope, getData, $location) {
-	        $scope.showOnSearch = function(query) {
-	            getData.wrapperAPI('search', 'getMovie', { query: query }, function(data) {
+	    .controller('searchController', ['$scope', 'getData', '$routeParams', function($scope, getData, $routeParams) {
+	        var q = $routeParams.query || "";
+	        if(q == '') return;
+	            getData.wrapperAPI('search', 'getMovie', { query: q }, function(data) {
 	                if(data.results) {
 	                    $scope.$apply(function() {
 	                        $scope.searchRes = data.results;
-	                        console.log("searchRes ", $scope.searchRes[0]);
+	                        console.log("searchRes ", $scope.searchRes);
 	                    });
 	                }
 	            });
-	        };
 	    }])
 	    .controller('nowMovieController', ['$scope', 'getData', function($scope, getData) {
 	            getData.wrapperAPI('movies', 'getNowPlaying', {}, function(data) {
@@ -30138,6 +30146,30 @@
 	                    console.log("nowMovie ", data.results);
 	                }.bind(this));
 	            }.bind(this));
+	    }])
+	    .controller('soonController', ['$scope', 'getData', function($scope, getData) {
+	        getData.wrapperAPI('movies', 'getUpcoming', {}, function(data) {
+	            $scope.$apply(function() {
+	                $scope.soonMovies = data.results;
+	                console.log("soonMovie ", data.results);
+	            });
+	        });
+	    }])
+	    .controller('mainPageController', ['getData', function(getData) {
+	        this.title = 'Welcome on main page of Film DB!';
+	    }])
+	    .controller('itemFilmController', ['$rootScope', '$routeParams', 'getData', function($rootScope, $routeParams, getData) {
+	        var idFilm = $routeParams.id || "";
+	        console.log($routeParams, idFilm);
+	        if(idFilm == "") return;
+	        getData.wrapperAPI('movies', 'getById', {id: idFilm}, function(data) {
+	            if(data) {
+	                console.log(data);
+	                $rootScope.$on('clickFilm', function(data) {
+	                    console.log("catch event ----- ", data)
+	                });
+	            }
+	        });
 	    }]);
 
 /***/ },
@@ -31831,12 +31863,11 @@
 	var db = __webpack_require__(6);
 
 	module.exports = angular.module('Directives', [])
-	.directive("searchWidget", [function() {
+	.directive("searchWidget", ['$location', '$rootScope', function($location, $rootScope) {
 	        return {
 	            restrict: "E",
 	            replace: true,
 	            templateUrl: './js/templates/search.tpl.html',
-	            controller: 'searchController',
 	            link: function(scope, elem) {
 	                var btn = elem.find('button'),
 	                    input = elem.find('input');
@@ -31844,8 +31875,10 @@
 	                    e.preventDefault();
 	                    var query = input.val();
 	                    if(query.trim()) {
-	                        scope.showOnSearch(query);
-	                        console.log(query);
+	                        //scope.showOnSearch(query);
+	                        $rootScope.$apply(function() {
+	                            $location.path('/search/' + query);
+	                        });
 	                    }
 	                });
 	            }
@@ -31883,6 +31916,20 @@
 	            ].join(''),
 	            link: function(scope, elem) {
 
+	            }
+	        };
+	}])
+	.directive('clickFilm', ['$rootScope', function($rootScope) {
+	        return {
+	            restrict: "A",
+	            link: function(scope, elem) {
+	                elem[0].addEventListener('click', function(e) {
+	                    if(e.target.tagName == "IMG") {
+	                        var id = e.target.getAttribute('data-id');
+	                        console.log(id);
+	                        $rootScope.$broadcast('clickFilm', {id: id})
+	                    }
+	                }.bind(elem[0]), false);
 	            }
 	        };
 	    }]);

@@ -1,12 +1,11 @@
 var db = require('../vendor/moviedb');
 
 module.exports = angular.module('Directives', [])
-.directive("searchWidget", [function() {
+.directive("searchWidget", ['$location', '$rootScope', function($location, $rootScope) {
         return {
             restrict: "E",
             replace: true,
             templateUrl: './js/templates/search.tpl.html',
-            controller: 'searchController',
             link: function(scope, elem) {
                 var btn = elem.find('button'),
                     input = elem.find('input');
@@ -14,8 +13,10 @@ module.exports = angular.module('Directives', [])
                     e.preventDefault();
                     var query = input.val();
                     if(query.trim()) {
-                        scope.showOnSearch(query);
-                        console.log(query);
+                        //scope.showOnSearch(query);
+                        $rootScope.$apply(function() {
+                            $location.path('/search/' + query);
+                        });
                     }
                 });
             }
@@ -53,6 +54,20 @@ module.exports = angular.module('Directives', [])
             ].join(''),
             link: function(scope, elem) {
 
+            }
+        };
+}])
+.directive('clickFilm', ['$rootScope', function($rootScope) {
+        return {
+            restrict: "A",
+            link: function(scope, elem) {
+                elem[0].addEventListener('click', function(e) {
+                    if(e.target.tagName == "IMG") {
+                        var id = e.target.getAttribute('data-id');
+                        console.log(id);
+                        $rootScope.$broadcast('clickFilm', {id: id})
+                    }
+                }.bind(elem[0]), false);
             }
         };
     }]);

@@ -11,13 +11,21 @@ app.config(function($routeProvider, $locationProvider) {
     .when('/', {
         templateUrl: './js/templates/main_page.tpl.html'
     })
-    .when('/search', {
+    .when('/search/:query?', {
         templateUrl: './js/templates/search_page.tpl.html',
         controller: 'searchController'
     })
     .when('/nowmovie', {
-        templateUrl: './js/templates/nowmoview_page.tpl.html',
-        //controller: 'nowMovieController'
+        templateUrl: './js/templates/nowmoview_page.tpl.html'
+    })
+    .when('/soon', {
+        templateUrl: './js/templates/soon_moview_page.tpl.html'
+    })
+    .when('/film/:id', {
+        templateUrl: './js/templates/item_film.tpl.html'
+    })
+    .otherwise({
+            redirectTo: '/'
     });
 });
 angular.element(document).ready(function() {

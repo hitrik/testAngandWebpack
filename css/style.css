@@ -68,22 +68,22 @@ body .container .controlls button {
 body .container .controlls button:hover {
   background-color: #329332;
 }
-body .container .results .item_film {
+body .container .item_film {
   display: inline-block;
   vertical-align: top;
   padding: 5px;
   margin: 10px;
   position: relative;
 }
-body .container .results .item_film figure {
+body .container .item_film figure {
   height: 225px;
   background: #000;
   overflow: hidden;
 }
-body .container .results .item_film figure img {
+body .container .item_film figure img {
   max-height: 100%;
 }
-body .container .results .item_film__title {
+body .container .item_film__title {
   width: 150px;
   margin: auto;
   text-align: center;
@@ -98,7 +98,7 @@ body .container .results .item_film__title {
   padding: 10px 5px;
   font-weight: 600;
 }
-body .container .results .item_film__rating {
+body .container .item_film__rating {
   position: absolute;
   padding: 5px;
   background: #F9F075;
@@ -106,7 +106,7 @@ body .container .results .item_film__rating {
   right: 47px;
   border-radius: 0 0 0 5px;
 }
-body .container .results .item_film__release {
+body .container .item_film__release {
   position: absolute;
   top: 23px;
   left: 47px;
