@@ -1,4 +1,8 @@
-<div>Now Movie</div>
+<div>Now Movie list</div>
 <div data-ng-controller="nowMovieController as vm">
-    {{vm.nowMovies | json}}
+    <div class="item_film nowmovie" data-ng-repeat="film in vm.nowMovies">
+        <figure>
+            <img ng-src="{{film.poster_path ? (img_uri150 + film.poster_path) : 'http://placehold.it/150x212'}}" alt="{{film.title}}"/>
+        </figure>
+    </div>
 </div>

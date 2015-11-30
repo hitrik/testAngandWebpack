@@ -17,7 +17,7 @@ app.config(function($routeProvider, $locationProvider) {
     })
     .when('/nowmovie', {
         templateUrl: './js/templates/nowmoview_page.tpl.html',
-        controller: 'nowMovieController'
+        //controller: 'nowMovieController'
     });
 });
 angular.element(document).ready(function() {
