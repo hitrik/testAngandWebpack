@@ -11,9 +11,13 @@ app.config(function($routeProvider, $locationProvider) {
     .when('/', {
         templateUrl: './js/templates/main_page.tpl.html'
     })
-    .when('/search/:query?', {
+    .when('/search', {
         templateUrl: './js/templates/search_page.tpl.html',
         controller: 'searchController'
+    })
+    .when('/nowmovie', {
+        templateUrl: './js/templates/nowmoview_page.tpl.html',
+        controller: 'nowMovieController'
     });
 });
 angular.element(document).ready(function() {

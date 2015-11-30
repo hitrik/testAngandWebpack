@@ -6,6 +6,7 @@ module.exports = angular.module('Directives', [])
             restrict: "E",
             replace: true,
             templateUrl: './js/templates/search.tpl.html',
+            controller: 'searchController',
             link: function(scope, elem) {
                 var btn = elem.find('button'),
                     input = elem.find('input');
@@ -14,6 +15,7 @@ module.exports = angular.module('Directives', [])
                     var query = input.val();
                     if(query.trim()) {
                         scope.showOnSearch(query);
+                        console.log(query);
                     }
                 });
             }
@@ -36,6 +38,19 @@ module.exports = angular.module('Directives', [])
             },
             templateUrl: './js/templates/menu.tpl.html',
             controllerAs: "menu",
+            link: function(scope, elem) {
+
+            }
+        };
+    }])
+.directive('showMovies', [function() {
+        return {
+            restrict: "E",
+            replace: true,
+            template: [
+                '<div>',
+
+            ].join(''),
             link: function(scope, elem) {
 
             }

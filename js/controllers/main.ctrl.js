@@ -6,18 +6,26 @@ module.exports = angular.module("Controllers", [])
             console.log('page is loaded');
         });
     }])
-    .controller('searchController', ['$scope', 'getData', '$location', '$routeParams', function($scope, getData, $location, $routeParams) {
-        var query = $routeParams.query || '';
+    .controller('searchController', ['$scope', 'getData', '$location', function($scope, getData, $location) {
         $scope.img_uri150 = db.common.images_uri150;
-        $scope.showOnSearch = function() {
+        $scope.showOnSearch = function(query) {
             getData.wrapperAPI('search', 'getMovie', { query: query }, function(data) {
                 if(data.results) {
                     $scope.$apply(function() {
                         $scope.searchRes = data.results;
-                        $location.hash(query);
+                        console.log($scope.searchRes[0].id);
                     });
-                    console.log($scope.searchRes, $location);
                 }
             });
+        };
+    }])
+    .controller('nowMovieController', ['$scope', 'getData', function($scope, getData) {
+        this.showMovies = function() {
+            getData.wrapperAPI('movies', 'getNowPlaying', {}, function(data) {
+                $scope.$apply(function() {
+                    this.nowMovies = data.results;
+                    console.log(data.results);
+                }.bind(this));
+            }.bind(this));
         };
     }]);

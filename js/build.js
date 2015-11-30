@@ -47,7 +47,7 @@
 	var angular = __webpack_require__(1);
 	var ngRoute = __webpack_require__(3);
 	var controllers = __webpack_require__(5);
-	var services = __webpack_require__(6);
+	var services = __webpack_require__(7);
 	var directives = __webpack_require__(8);
 	var app = angular.module('App', [controllers.name, services.name, directives.name, ngRoute]);
 
@@ -57,9 +57,13 @@
 	    .when('/', {
 	        templateUrl: './js/templates/main_page.tpl.html'
 	    })
-	    .when('/search/:query?', {
+	    .when('/search', {
 	        templateUrl: './js/templates/search_page.tpl.html',
 	        controller: 'searchController'
+	    })
+	    .when('/nowmovie', {
+	        templateUrl: './js/templates/nowmoview_page.tpl.html',
+	        controller: 'nowMovieController'
 	    });
 	});
 	angular.element(document).ready(function() {
@@ -30106,7 +30110,7 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var db = __webpack_require__(7);
+	var db = __webpack_require__(6);
 
 	module.exports = angular.module("Controllers", [])
 	.controller("MainCtrl", ["$rootScope", "getData", function($rootScope) {
@@ -30114,45 +30118,32 @@
 	            console.log('page is loaded');
 	        });
 	    }])
-	    .controller('searchController', ['$scope', 'getData', '$location', '$routeParams', function($scope, getData, $location, $routeParams) {
-	        var query = $routeParams.query || '';
+	    .controller('searchController', ['$scope', 'getData', '$location', function($scope, getData, $location) {
 	        $scope.img_uri150 = db.common.images_uri150;
-	        $scope.showOnSearch = function() {
+	        $scope.showOnSearch = function(query) {
 	            getData.wrapperAPI('search', 'getMovie', { query: query }, function(data) {
 	                if(data.results) {
 	                    $scope.$apply(function() {
 	                        $scope.searchRes = data.results;
-	                        $location.hash(query);
+	                        console.log($scope.searchRes[0].id);
 	                    });
-	                    console.log($scope.searchRes, $location);
 	                }
 	            });
+	        };
+	    }])
+	    .controller('nowMovieController', ['$scope', 'getData', function($scope, getData) {
+	        this.showMovies = function() {
+	            getData.wrapperAPI('movies', 'getNowPlaying', {}, function(data) {
+	                $scope.$apply(function() {
+	                    this.nowMovies = data.results;
+	                    console.log(data.results);
+	                }.bind(this));
+	            }.bind(this));
 	        };
 	    }]);
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var db = __webpack_require__(7);
-
-	module.exports = angular.module("Services", [])
-	      .factory('getData', [function() {
-	        var wrapperAPI = function(cat, fnName, options, callback) {
-	            options = options || {};
-	            db[cat][fnName](options, function(result) {
-	                return callback(JSON.parse(result));
-	            }, function(err) {
-	                console.log('err', err);
-	            });
-	        };
-	        return {
-	            wrapperAPI: wrapperAPI
-	        };
-	    }]);
-
-/***/ },
-/* 7 */
 /***/ function(module, exports) {
 
 	var theMovieDb = {};
@@ -31815,10 +31806,31 @@
 	module.exports = theMovieDb;
 
 /***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var db = __webpack_require__(6);
+
+	module.exports = angular.module("Services", [])
+	      .factory('getData', [function() {
+	        var wrapperAPI = function(cat, fnName, options, callback) {
+	            options = options || {};
+	            db[cat][fnName](options, function(result) {
+	                return callback(JSON.parse(result));
+	            }, function(err) {
+	                console.log('err', err);
+	            });
+	        };
+	        return {
+	            wrapperAPI: wrapperAPI
+	        };
+	    }]);
+
+/***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var db = __webpack_require__(7);
+	var db = __webpack_require__(6);
 
 	module.exports = angular.module('Directives', [])
 	.directive("searchWidget", [function() {
@@ -31826,6 +31838,7 @@
 	            restrict: "E",
 	            replace: true,
 	            templateUrl: './js/templates/search.tpl.html',
+	            controller: 'searchController',
 	            link: function(scope, elem) {
 	                var btn = elem.find('button'),
 	                    input = elem.find('input');
@@ -31834,6 +31847,7 @@
 	                    var query = input.val();
 	                    if(query.trim()) {
 	                        scope.showOnSearch(query);
+	                        console.log(query);
 	                    }
 	                });
 	            }
@@ -31856,6 +31870,19 @@
 	            },
 	            templateUrl: './js/templates/menu.tpl.html',
 	            controllerAs: "menu",
+	            link: function(scope, elem) {
+
+	            }
+	        };
+	    }])
+	.directive('showMovies', [function() {
+	        return {
+	            restrict: "E",
+	            replace: true,
+	            template: [
+	                '<div>',
+
+	            ].join(''),
 	            link: function(scope, elem) {
 
 	            }

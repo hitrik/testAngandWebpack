@@ -10,7 +10,7 @@
             </figure>
             <div class="item_film__title">{{film.title}}</div>
             <div class="item_film__rating">{{film.vote_average}}</div>
-            <div class="item_film__release">{{film.release_date}}</div>
+            <div class="item_film__release">{{film.release_date | limitTo: 4}}</div>
         </div>
     </div>
 </div>
