@@ -123,12 +123,18 @@ body .container .item_film__release {
 body .film_container {
   margin: 0;
   padding: 0;
+  position: absolute;
+  top: 68px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 body .film_container .wrapper {
   width: 60%;
   padding: 15px;
   margin: 50px auto;
   background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 40px 0 0 0;
 }
 body .film_container .wrapper .left_info,
 body .film_container .wrapper .right_info {
@@ -150,11 +156,14 @@ body .film_container .wrapper .right_info table td {
   padding: 5px;
 }
 body .film_container .wrapper .right_info table td:first-child {
-  width: 15%;
+  width: 20%;
 }
 body .film_container .wrapper .right_info table td a {
   color: steelblue;
 }
 body .film_container .wrapper .right_info table td a:hover {
   color: #3FB93F;
+}
+body #video {
+  display: none;
 }

@@ -7,7 +7,7 @@ module.exports = angular.module("Controllers", [])
         $rootScope.$on('loadPage', function() {
             console.log('page is loaded');
         });
-        $rootScope.$on('clickFilm', function(ev, data) {
+        var listener = $rootScope.$on('clickFilm', function(ev, data) {
             if(!angular.isUndefined(data)) {
                 $rootScope.$apply(function() {
                     $location.path('film/' + data);
@@ -17,10 +17,11 @@ module.exports = angular.module("Controllers", [])
             //    TODO Notify error happened
             }
         });
+        $rootScope.$on('$destroy', listener);
     }])
     .controller('searchController', ['$scope', 'getData', '$routeParams', function($scope, getData, $routeParams) {
         var q = $routeParams.query || "";
-        if(q == '') return;
+        if(angular.isUndefined(q)) return;
             getData.wrapperAPI('search', 'getMovie', { query: q }, function(data) {
                 if(data.results) {
                     $scope.$apply(function() {
@@ -57,11 +58,16 @@ module.exports = angular.module("Controllers", [])
             if(data) {
                 $scope.$apply(function() {
                     $scope.film = data;
-                    $scope.bgFilm = {
-                        'background': '#fff url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
-                        'background-size': 'cover'
-                    };
-                    console.log(data);
+                    if(data.backdrop_path) {
+                        $scope.bgFilm = {
+                            'background-image': 'url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
+                            'background-size': 'cover'
+                        };
+                    } else {
+                        $scope.bgFilm = {
+                            'background' : '#444'
+                        };
+                    }
                 });
             }
         });

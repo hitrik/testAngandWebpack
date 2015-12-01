@@ -21,21 +21,24 @@
                 </tr>
                 <tr>
                     <td>Бюджет</td>
-                    <td>{{((film.budget/1000000) + '$ млн') || 'Не указано'}}</td>
+                    <td>{{(film.budget/1000000) ? (film.budget/1000000) + '$ млн.' : 'Не указан'}}</td>
                 </tr>
                 <tr>
                     <td>Сайт фильма</td>
-                    <td><a data-ng-href="{{film.homepage}} target='_blank'">{{film.title}}</a></td>
+                    <td><a data-ng-href="{{film.homepage}}">{{film.title}}</a></td>
                 </tr>
                 <tr>
                     <td>Дата выхода</td>
                     <td>{{film.release_date}}</td>
                 </tr>
                 <tr>
-                    <td>Фильм на IMDB</td>
-                    <td><a data-ng-href="{{film.imdb_id}} target='_blank'">Страница на IMDB</a></td>
+                    <td>Страница IMDB</td>
+                    <td><a data-ng-href="{{'//www.imdb.com/title/' + film.imdb_id}}">Перейти на IMDB</a></td>
                 </tr>
             </table>
+        </div>
+        <div class="additional_info">
+            <show-trailer></show-trailer>
         </div>
     </div>
 

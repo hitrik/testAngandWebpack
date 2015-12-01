@@ -30127,7 +30127,7 @@
 	        $rootScope.$on('loadPage', function() {
 	            console.log('page is loaded');
 	        });
-	        $rootScope.$on('clickFilm', function(ev, data) {
+	        var listener = $rootScope.$on('clickFilm', function(ev, data) {
 	            if(!angular.isUndefined(data)) {
 	                $rootScope.$apply(function() {
 	                    $location.path('film/' + data);
@@ -30137,10 +30137,11 @@
 	            //    TODO Notify error happened
 	            }
 	        });
+	        $rootScope.$on('$destroy', listener);
 	    }])
 	    .controller('searchController', ['$scope', 'getData', '$routeParams', function($scope, getData, $routeParams) {
 	        var q = $routeParams.query || "";
-	        if(q == '') return;
+	        if(angular.isUndefined(q)) return;
 	            getData.wrapperAPI('search', 'getMovie', { query: q }, function(data) {
 	                if(data.results) {
 	                    $scope.$apply(function() {
@@ -30177,11 +30178,16 @@
 	            if(data) {
 	                $scope.$apply(function() {
 	                    $scope.film = data;
-	                    $scope.bgFilm = {
-	                        'background': '#fff url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
-	                        'background-size': 'cover'
-	                    };
-	                    console.log(data);
+	                    if(data.backdrop_path) {
+	                        $scope.bgFilm = {
+	                            'background-image': 'url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
+	                            'background-size': 'cover'
+	                        };
+	                    } else {
+	                        $scope.bgFilm = {
+	                            'background' : '#444'
+	                        };
+	                    }
 	                });
 	            }
 	        });
@@ -31940,11 +31946,43 @@
 	            restrict: "A",
 	            link: function(scope, elem) {
 	                elem[0].addEventListener('click', function(e) {
-	                    if(e.target.tagName == "IMG") {
+	                    if(e.target.tagName == "IMG" && e.target.getAttribute('data-id')) {
 	                        var id = e.target.getAttribute('data-id');
 	                        $rootScope.$emit('clickFilm', id);
 	                    }
 	                }.bind(elem[0]), false);
+	            }
+	        };
+	    }])
+	.directive('showTrailer', ['$document', 'getData', function($document, getData) {
+	        return {
+	            restrict: 'E',
+	            replace: true,
+	            controller: function() {
+	                console.log('arguments', arguments);
+	            },
+	            controllerAs: 'vm',
+	            template: '<div>' +
+	            '<p>Смотреть трейлер</p>' +
+	             '<div id="video"><iframe data-ng-src="{{trailerSource}}"></div>' +
+	            '</div>',
+	            scope: true,
+	            link: function(scope, elem, attrs) {
+	                elem.on('click', function(e) {
+	                    e.preventDefault();
+	                    var div = document.createElement('div');
+	                    getData.wrapperAPI('movies', 'getTrailers', {id: scope.film.id}, function(result) {
+	                        if(result && result.youtube.length) {
+	                            scope.$apply(function() {
+	                                scope.trailerSource = 'http://www.youtube.com/watch?v=' + result.youtube[0].source;
+	                                console.log(scope.trailerSource);
+	                            });
+	                        } else {
+	                            console.log('err get source youtube video');
+	                            return false;
+	                        }
+	                    });
+	                });
 	            }
 	        };
 	    }]);
