@@ -3,6 +3,7 @@ var db = require('../vendor/moviedb');
 module.exports = angular.module("Controllers", [])
 .controller("MainCtrl", ["$rootScope", '$location', function($rootScope, $location) {
         $rootScope.img_uri150 = db.common.images_uri150;
+        $rootScope.img_uri1280 = db.common.images_uri1280;
         $rootScope.$on('loadPage', function() {
             console.log('page is loaded');
         });
@@ -57,7 +58,7 @@ module.exports = angular.module("Controllers", [])
                 $scope.$apply(function() {
                     $scope.film = data;
                     $scope.bgFilm = {
-                        'background': '#fff url(' + ($scope.img_uri150 + data.backdrop_path) + ')',
+                        'background': '#fff url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
                         'background-size': 'cover'
                     };
                     console.log(data);

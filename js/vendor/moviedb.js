@@ -5,6 +5,7 @@ theMovieDb.common = {
     base_uri: "http://api.themoviedb.org/3/",
     images_uri: "http://image.tmdb.org/t/p/",
     images_uri150: "http://image.tmdb.org/t/p/w150",
+    images_uri1280: "http://image.tmdb.org/t/p/w1280",
     timeout: 5000,
     generateQuery: function (options) {
         'use strict';

@@ -80,8 +80,14 @@ body .container .item_film figure {
   background: #000;
   overflow: hidden;
 }
+body .container .item_film figure:hover {
+  outline: 5px solid #3FB93F;
+}
 body .container .item_film figure img {
   max-height: 100%;
+}
+body .container .item_film figure img:hover {
+  cursor: pointer;
 }
 body .container .item_film__title {
   width: 150px;
@@ -113,4 +119,42 @@ body .container .item_film__release {
   background: orange;
   padding: 5px;
   border-radius: 0 0 5px 0;
+}
+body .film_container {
+  margin: 0;
+  padding: 0;
+}
+body .film_container .wrapper {
+  width: 60%;
+  padding: 15px;
+  margin: 50px auto;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+body .film_container .wrapper .left_info,
+body .film_container .wrapper .right_info {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+  padding: 5px;
+}
+body .film_container .wrapper .left_info {
+  width: 20%;
+}
+body .film_container .wrapper .right_info {
+  width: 70%;
+}
+body .film_container .wrapper .right_info table {
+  border-collapse: collapse;
+}
+body .film_container .wrapper .right_info table td {
+  padding: 5px;
+}
+body .film_container .wrapper .right_info table td:first-child {
+  width: 15%;
+}
+body .film_container .wrapper .right_info table td a {
+  color: steelblue;
+}
+body .film_container .wrapper .right_info table td a:hover {
+  color: #3FB93F;
 }

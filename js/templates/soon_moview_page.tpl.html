@@ -2,7 +2,7 @@
 <div data-ng-controller="soonController" class="container">
     <div class="item_film nowmovie" data-ng-repeat="film in soonMovies">
         <figure>
-            <img ng-src="{{film.poster_path ? (img_uri150 + film.poster_path) : 'http://placehold.it/150x212'}}" alt="{{film.title}}"/>
+            <img data-id="{{film.id}}" ng-src="{{film.poster_path ? (img_uri150 + film.poster_path) : 'http://placehold.it/150x212'}}" alt="{{film.title}}"/>
         </figure>
         <div class="item_film__title">{{film.title}}</div>
         <div class="item_film__rating">{{film.vote_average}}</div>

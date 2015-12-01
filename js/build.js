@@ -30123,6 +30123,7 @@
 	module.exports = angular.module("Controllers", [])
 	.controller("MainCtrl", ["$rootScope", '$location', function($rootScope, $location) {
 	        $rootScope.img_uri150 = db.common.images_uri150;
+	        $rootScope.img_uri1280 = db.common.images_uri1280;
 	        $rootScope.$on('loadPage', function() {
 	            console.log('page is loaded');
 	        });
@@ -30177,7 +30178,7 @@
 	                $scope.$apply(function() {
 	                    $scope.film = data;
 	                    $scope.bgFilm = {
-	                        'background': '#fff url(' + ($scope.img_uri150 + data.backdrop_path) + ')',
+	                        'background': '#fff url(' + ($scope.img_uri1280 + data.backdrop_path) + ')',
 	                        'background-size': 'cover'
 	                    };
 	                    console.log(data);
@@ -30197,6 +30198,7 @@
 	    base_uri: "http://api.themoviedb.org/3/",
 	    images_uri: "http://image.tmdb.org/t/p/",
 	    images_uri150: "http://image.tmdb.org/t/p/w150",
+	    images_uri1280: "http://image.tmdb.org/t/p/w1280",
 	    timeout: 5000,
 	    generateQuery: function (options) {
 	        'use strict';
