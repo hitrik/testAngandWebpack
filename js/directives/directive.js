@@ -64,8 +64,7 @@ module.exports = angular.module('Directives', [])
                 elem[0].addEventListener('click', function(e) {
                     if(e.target.tagName == "IMG") {
                         var id = e.target.getAttribute('data-id');
-                        console.log(id);
-                        $rootScope.$broadcast('clickFilm', {id: id})
+                        $rootScope.$emit('clickFilm', id);
                     }
                 }.bind(elem[0]), false);
             }
