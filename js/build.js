@@ -31954,29 +31954,25 @@
 	            }
 	        };
 	    }])
-	.directive('showTrailer', ['$document', 'getData', function($document, getData) {
+	.directive('showTrailer', ['$document', 'getData', '$compile', function($document, getData, $compile) {
 	        return {
-	            restrict: 'E',
+	            restrict: 'A',
 	            replace: true,
 	            controller: function() {
 	                console.log('arguments', arguments);
 	            },
 	            controllerAs: 'vm',
-	            template: '<div>' +
-	            '<p>Смотреть трейлер</p>' +
-	             '<div id="video"><iframe data-ng-src="{{trailerSource}}"></div>' +
-	            '</div>',
 	            scope: true,
 	            link: function(scope, elem, attrs) {
 	                elem.on('click', function(e) {
 	                    e.preventDefault();
-	                    var div = document.createElement('div');
 	                    getData.wrapperAPI('movies', 'getTrailers', {id: scope.film.id}, function(result) {
 	                        if(result && result.youtube.length) {
-	                            scope.$apply(function() {
-	                                scope.trailerSource = 'http://www.youtube.com/watch?v=' + result.youtube[0].source;
-	                                console.log(scope.trailerSource);
-	                            });
+	                           // scope.$apply(function() {
+	                                var content = '<iframe src="http://www.youtube.com/watch?v=' + result.youtube[0].source + ' />';
+	                                document.querySelector('#video').innerHTML = '<i>3434</i>';
+	                                console.log(content);
+	                           // });
 	                        } else {
 	                            console.log('err get source youtube video');
 	                            return false;

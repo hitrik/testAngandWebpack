@@ -164,6 +164,3 @@ body .film_container .wrapper .right_info table td a {
 body .film_container .wrapper .right_info table td a:hover {
   color: #3FB93F;
 }
-body #video {
-  display: none;
-}
